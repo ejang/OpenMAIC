@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-  <a href="./README.md">English</a> | <a href="./README-zh.md">简体中文</a>
+  <a href="./README.md">English</a> | <a href="./README-zh.md">简体中文</a> | <a href="./README-ko.md">한국어</a>
   <br/>
   <a href="https://open.maic.chat/">Live Demo</a> · <a href="#-quick-start">Quick Start</a> · <a href="#-features">Features</a> · <a href="#-use-cases">Use Cases</a> · <a href="#-openclaw-integration">OpenClaw</a>
 </p>
@@ -321,7 +321,7 @@ Optional config in `~/.openclaw/openclaw.json`:
 - **Text-to-Speech** — Multiple voice providers with customizable voices
 - **Speech Recognition** — Talk to your AI teacher using your microphone
 - **Web Search** — Agents search the web for up-to-date information during class
-- **i18n** — Interface supports Chinese and English
+- **i18n** — Interface supports Korean, Chinese and English
 - **Dark Mode** — Easy on the eyes for late-night study sessions
 
 ---
