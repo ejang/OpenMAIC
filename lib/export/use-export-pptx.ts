@@ -1177,5 +1177,22 @@ export function useExportPPTX() {
     t,
   ]);
 
-  return { exporting, exportPPTX, exportResourcePack };
+  // ── Export JSON (Full classroom data) ──
+  const exportJSON = useCallback(() => {
+    withExportGuard(async () => {
+      const fileName = stage?.name || 'classroom';
+      const data = {
+        version: '1.0',
+        exportedAt: new Date().toISOString(),
+        stage,
+        scenes,
+      };
+      const jsonStr = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      saveAs(blob, `${fileName}.json`);
+      toast.success(t('export.exportSuccess'));
+    });
+  }, [withExportGuard, stage, scenes, t]);
+
+  return { exporting, exportPPTX, exportResourcePack, exportJSON };
 }

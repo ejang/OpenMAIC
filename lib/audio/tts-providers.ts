@@ -130,6 +130,9 @@ export async function generateTTS(
     case 'qwen-tts':
       return await generateQwenTTS(config, text);
 
+    case 'gemini-tts':
+      return await generateGeminiTTS(config, text);
+
     case 'browser-native-tts':
       throw new Error(
         'Browser Native TTS must be handled client-side using Web Speech API. This provider cannot be used on the server.',
@@ -317,6 +320,85 @@ async function generateQwenTTS(config: TTSModelConfig, text: string): Promise<TT
 }
 
 /**
+ * Gemini TTS implementation (Google AI Studio API - Gemini 2.5 Flash TTS)
+ */
+async function generateGeminiTTS(config: TTSModelConfig, text: string): Promise<TTSGenerationResult> {
+  const baseUrl = config.baseUrl || TTS_PROVIDERS['gemini-tts'].defaultBaseUrl;
+
+  // Log the text being sent for debugging
+  console.log('[Gemini TTS] Text:', text, 'Length:', text.length);
+
+  // Build request body
+  const requestBody = {
+    contents: [
+      {
+        parts: [
+          {
+            text,
+          },
+        ],
+      },
+    ],
+    generationConfig: {
+      responseModalities: ['AUDIO'],
+      speechConfig: {
+        voiceConfig: {
+          prebuiltVoiceConfig: {
+            voiceName: config.voice,
+          },
+        },
+      },
+    },
+  };
+
+  const response = await fetch(
+    `${baseUrl}/models/gemini-2.5-flash-preview-tts:generateContent`,
+    {
+      method: 'POST',
+      headers: {
+        'x-goog-api-key': config.apiKey!,
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify(requestBody),
+    },
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text().catch(() => response.statusText);
+    throw new Error(`Gemini TTS API error: ${errorText}`);
+  }
+
+  const data = await response.json();
+
+  // Extract base64-encoded audio from response
+  if (
+    !data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data
+  ) {
+    throw new Error(
+      `Gemini TTS error: No audio data in response. Response: ${JSON.stringify(data)}`,
+    );
+  }
+
+  const base64Audio = data.candidates[0].content.parts[0].inlineData.data;
+
+  // Decode base64 to binary PCM data
+  const binaryString = atob(base64Audio);
+  const pcmData = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    pcmData[i] = binaryString.charCodeAt(i);
+  }
+
+  // Gemini returns raw PCM at 24kHz, mono, 16-bit
+  // Convert to WAV format by adding WAV header
+  const wavData = createWavFile(pcmData, 24000, 1, 16);
+
+  return {
+    audio: wavData,
+    format: 'wav',
+  };
+}
+
+/**
  * Get current TTS configuration from settings store
  * Note: This function should only be called in browser context
  */
@@ -342,6 +424,63 @@ export async function getCurrentTTSConfig(): Promise<TTSModelConfig> {
 
 // Re-export from constants for convenience
 export { getAllTTSProviders, getTTSProvider, getTTSVoices } from './constants';
+
+/**
+ * Create WAV file from raw PCM data
+ * @param pcmData Raw PCM audio data
+ * @param sampleRate Sample rate in Hz (e.g., 24000)
+ * @param numChannels Number of audio channels (1 = mono, 2 = stereo)
+ * @param bitsPerSample Bits per sample (typically 16)
+ * @returns WAV file as Uint8Array
+ */
+function createWavFile(
+  pcmData: Uint8Array,
+  sampleRate: number,
+  numChannels: number,
+  bitsPerSample: number,
+): Uint8Array {
+  const byteRate = (sampleRate * numChannels * bitsPerSample) / 8;
+  const blockAlign = (numChannels * bitsPerSample) / 8;
+  const dataSize = pcmData.length;
+  const headerSize = 44;
+  const fileSize = headerSize + dataSize - 8;
+
+  const wav = new Uint8Array(headerSize + dataSize);
+  const view = new DataView(wav.buffer);
+
+  // RIFF chunk descriptor
+  writeString(view, 0, 'RIFF');
+  view.setUint32(4, fileSize, true);
+  writeString(view, 8, 'WAVE');
+
+  // fmt sub-chunk
+  writeString(view, 12, 'fmt ');
+  view.setUint32(16, 16, true); // Subchunk1Size (16 for PCM)
+  view.setUint16(20, 1, true); // AudioFormat (1 for PCM)
+  view.setUint16(22, numChannels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, byteRate, true);
+  view.setUint16(32, blockAlign, true);
+  view.setUint16(34, bitsPerSample, true);
+
+  // data sub-chunk
+  writeString(view, 36, 'data');
+  view.setUint32(40, dataSize, true);
+
+  // Copy PCM data
+  wav.set(pcmData, headerSize);
+
+  return wav;
+}
+
+/**
+ * Helper function to write ASCII string to DataView
+ */
+function writeString(view: DataView, offset: number, str: string): void {
+  for (let i = 0; i < str.length; i++) {
+    view.setUint8(offset + i, str.charCodeAt(i));
+  }
+}
 
 /**
  * Escape XML special characters for SSML

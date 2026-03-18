@@ -80,7 +80,7 @@ function createInMemoryStore(stage: Stage): StageStore {
 }
 
 function normalizeLanguage(language?: string): 'zh-CN' | 'en-US' {
-  return language === 'en-US' ? 'en-US' : 'zh-CN';
+  return language === 'en-US' ? 'en-US' : 'ko-KR';
 }
 
 export async function generateClassroom(

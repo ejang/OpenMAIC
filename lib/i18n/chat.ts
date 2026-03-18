@@ -139,3 +139,74 @@ export const chatEnUS = {
     stopListening: 'Stop recording',
   },
 } as const;
+
+export const chatKoKR = {
+  chat: {
+    lecture: '강의',
+    noConversations: '대화 없음',
+    startConversation: '메시지를 입력하여 대화를 시작하세요',
+    noMessages: '아직 메시지가 없습니다',
+    ended: '종료됨',
+    unknown: '알 수 없음',
+    stopDiscussion: '토론 중지',
+    endQA: 'Q&A 종료',
+    tabs: {
+      lecture: '노트',
+      chat: '채팅',
+    },
+    lectureNotes: {
+      empty: '강의 재생 후 노트가 여기에 표시됩니다',
+      emptyHint: '재생 버튼을 눌러 강의를 시작하세요',
+      pageLabel: '{n}페이지',
+      currentPage: '현재',
+    },
+    badge: {
+      qa: 'Q&A',
+      discussion: '토론',
+      lecture: '강의',
+    },
+  },
+  actions: {
+    names: {
+      spotlight: '스포트라이트',
+      laser: '레이저 포인터',
+      wb_open: '화이트보드 열기',
+      wb_draw_text: '화이트보드 텍스트',
+      wb_draw_shape: '화이트보드 도형',
+      wb_draw_chart: '화이트보드 차트',
+      wb_draw_latex: '화이트보드 수식',
+      wb_draw_table: '화이트보드 표',
+      wb_draw_line: '화이트보드 선',
+      wb_clear: '화이트보드 지우기',
+      wb_delete: '요소 삭제',
+      wb_close: '화이트보드 닫기',
+      discussion: '수업 토론',
+    },
+    status: {
+      inputStreaming: '대기 중',
+      inputAvailable: '실행 중',
+      outputAvailable: '완료됨',
+      outputError: '오류',
+      outputDenied: '거부됨',
+      running: '실행 중',
+      result: '완료됨',
+      error: '오류',
+    },
+  },
+  agentBar: {
+    readyToLearn: '함께 배울 준비가 되셨나요?',
+    expandedTitle: '교실 역할 구성',
+    configTooltip: '클릭하여 교실 역할 구성',
+  },
+  proactiveCard: {
+    discussion: '토론',
+    join: '토론 참여',
+    skip: '건너뛰기',
+    pause: '일시정지',
+    resume: '계속',
+  },
+  voice: {
+    startListening: '음성 입력',
+    stopListening: '녹음 중지',
+  },
+} as const;

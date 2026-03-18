@@ -127,3 +127,69 @@ export const generationEnUS = {
     webSearchFailed: 'Web search failed',
   },
 } as const;
+
+export const generationKoKR = {
+  classroom: {
+    recentClassrooms: '최근 학습',
+    today: '오늘',
+    yesterday: '어제',
+    daysAgo: '일 전',
+    slides: '페이지',
+    nameCopied: '교실 이름이 복사되었습니다',
+    deleteConfirmTitle: '교실 삭제',
+    delete: '삭제',
+  },
+  upload: {
+    pdfSizeLimit: '최대 50MB의 PDF 파일을 지원합니다',
+    generateFailed: '교실 생성에 실패했습니다. 다시 시도해 주세요',
+    requirementPlaceholder:
+      '배우고 싶은 내용을 입력하세요. 예:\n"Python을 처음부터 배워서 30분 안에 첫 프로그램 작성하기"\n"화이트보드로 푸리에 변환 설명하기"\n"보드게임 아발론 하는 방법"',
+    requirementRequired: '코스 요구사항을 입력해 주세요',
+    fileTooLarge: '파일이 너무 큽니다. 50MB 미만의 PDF 파일을 선택해 주세요',
+  },
+  generation: {
+    // Progress steps (used dynamically via activeStep)
+    analyzingPdf: 'PDF 문서 분석',
+    analyzingPdfDesc: '문서 구조 및 내용 추출 중...',
+    generatingOutlines: '코스 개요 생성',
+    generatingOutlinesDesc: '학습 경로 구축 중...',
+    generatingSlideContent: '페이지 내용 생성',
+    generatingSlideContentDesc: '슬라이드, 퀴즈 및 인터랙티브 콘텐츠 생성 중...',
+    generatingActions: '교육 동작 생성',
+    generatingActionsDesc: '설명, 강조 및 상호작용 흐름 조율 중...',
+    generationComplete: '생성 완료!',
+    generationFailed: '생성 실패',
+    generatingCourse: '코스 생성 중',
+    openingClassroom: '교실 여는 중...',
+    outlineReady: '코스 개요가 생성되었습니다',
+    generatingFirstPage: '첫 페이지 생성 중...',
+    firstPageReady: '첫 페이지 준비 완료! 교실 여는 중...',
+    speechFailed: '음성 합성 실패',
+    retryScene: '재생성',
+    retryingScene: '재생성 중...',
+    backToHome: '홈으로 돌아가기',
+    sessionNotFound: '세션을 찾을 수 없음',
+    sessionNotFoundDesc: '생성 프로세스를 시작하려면 코스 요구사항을 입력하세요.',
+    goBackAndRetry: '돌아가서 다시 시도',
+    classroomReady: '개인 맞춤형 AI 학습 환경이 성공적으로 생성되었습니다.',
+    aiWorking: 'AI 에이전트 작업 중...',
+    textTruncated: '문서 텍스트가 길어 첫 {n}자만 생성에 사용합니다',
+    imageTruncated:
+      '{total}개의 이미지가 발견되어 {max}개 이미지 제한을 초과합니다. 추가 이미지는 텍스트 설명만 사용됩니다',
+    // Agent generation
+    agentGeneration: '교실 역할 생성',
+    agentGenerationDesc: '코스 내용을 기반으로 역할 생성 중...',
+    agentRevealTitle: '교실 역할',
+    viewAgents: '역할 보기',
+    continue: '계속',
+    // Outline errors
+    outlineRetrying: '개요 생성 문제 발생, 재시도 중...',
+    outlineEmptyResponse:
+      '모델이 유효한 개요를 반환하지 않았습니다. 모델 구성을 확인하고 다시 시도하세요',
+    outlineGenerateFailed: '개요 생성 실패, 나중에 다시 시도하세요',
+    // Web Search
+    webSearching: '웹 검색',
+    webSearchingDesc: '최신 정보를 위한 웹 검색 중',
+    webSearchFailed: '웹 검색 실패',
+  },
+} as const;

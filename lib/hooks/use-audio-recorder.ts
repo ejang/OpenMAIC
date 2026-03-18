@@ -101,7 +101,7 @@ export function useAudioRecorder(options: UseAudioRecorderOptions = {}) {
           const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
           const recognition = new SpeechRecognition();
 
-          recognition.lang = asrLanguage || 'zh-CN';
+          recognition.lang = asrLanguage || 'ko-KR';
           recognition.continuous = false;
           recognition.interimResults = false;
 

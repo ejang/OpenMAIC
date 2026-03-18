@@ -10,7 +10,7 @@ type I18nContextType = {
 };
 
 const LOCALE_STORAGE_KEY = 'locale';
-const VALID_LOCALES: Locale[] = ['zh-CN', 'en-US'];
+const VALID_LOCALES: Locale[] = ['en-US', 'ko-KR'];
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
@@ -22,13 +22,18 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
-      if (stored && VALID_LOCALES.includes(stored as Locale)) {
-        setLocaleState(stored as Locale);
+
+      // Force Korean if stored locale is zh-CN (migration fix)
+      if (stored === 'zh-CN' || !stored || !VALID_LOCALES.includes(stored as Locale)) {
+        const detected = navigator.language?.startsWith('ko')
+          ? 'ko-KR'
+          : 'en-US';
+        localStorage.setItem(LOCALE_STORAGE_KEY, detected);
+        setLocaleState(detected);
         return;
       }
-      const detected = navigator.language?.startsWith('zh') ? 'zh-CN' : 'en-US';
-      localStorage.setItem(LOCALE_STORAGE_KEY, detected);
-      setLocaleState(detected);
+
+      setLocaleState(stored as Locale);
     } catch {
       // localStorage unavailable, keep default
     }

@@ -606,6 +606,88 @@ export const TTS_PROVIDERS: Record<TTSProviderId, TTSProviderConfig> = {
     supportedFormats: ['mp3', 'wav', 'pcm'],
   },
 
+  'gemini-tts': {
+    id: 'gemini-tts',
+    name: 'Gemini TTS',
+    requiresApiKey: true,
+    defaultBaseUrl: 'https://generativelanguage.googleapis.com/v1beta',
+    icon: '/logos/gemini.svg',
+    voices: [
+      {
+        id: 'kore',
+        name: 'Kore (코어)',
+        language: 'ko',
+        gender: 'neutral',
+        description: '자연스럽고 다재다능한 목소리',
+      },
+      {
+        id: 'puck',
+        name: 'Puck (퍽)',
+        language: 'ko',
+        gender: 'neutral',
+        description: '밝고 활기찬 목소리',
+      },
+      {
+        id: 'charon',
+        name: 'Charon (카론)',
+        language: 'ko',
+        gender: 'male',
+        description: '깊고 권위있는 목소리',
+      },
+      {
+        id: 'zephyr',
+        name: 'Zephyr (제피르)',
+        language: 'ko',
+        gender: 'neutral',
+        description: '가볍고 경쾌한 목소리',
+      },
+      {
+        id: 'enceladus',
+        name: 'Enceladus (엔셀라두스)',
+        language: 'ko',
+        gender: 'neutral',
+        description: '차분하고 침착한 목소리',
+      },
+      {
+        id: 'umbriel',
+        name: 'Umbriel (움브리엘)',
+        language: 'ko',
+        gender: 'neutral',
+        description: '부드럽고 전문적인 목소리',
+      },
+      {
+        id: 'aoede',
+        name: 'Aoede (아오이데)',
+        language: 'ko',
+        gender: 'female',
+        description: '선율적이고 표현력 풍부한 목소리',
+      },
+      {
+        id: 'fenrir',
+        name: 'Fenrir (펜리르)',
+        language: 'ko',
+        gender: 'male',
+        description: '강하고 자신감 있는 목소리',
+      },
+      {
+        id: 'iapetus',
+        name: 'Iapetus (이아페투스)',
+        language: 'ko',
+        gender: 'male',
+        description: '성숙하고 지혜로운 목소리',
+      },
+      {
+        id: 'despina',
+        name: 'Despina (데스피나)',
+        language: 'ko',
+        gender: 'female',
+        description: '따뜻하고 친근한 목소리',
+      },
+    ],
+    supportedFormats: ['wav', 'pcm'],
+    speedRange: { min: 0.5, max: 2.0, default: 1.0 },
+  },
+
   'browser-native-tts': {
     id: 'browser-native-tts',
     name: '浏览器原生 (Web Speech API)',
@@ -639,10 +721,9 @@ export const ASR_PROVIDERS: Record<ASRProviderId, ASRProviderConfig> = {
       // Source: https://platform.openai.com/docs/guides/speech-to-text
       'auto', // Auto-detect
       // Hot languages (commonly used)
-      'zh', // Chinese
+      'ko', // Korean
       'en', // English
       'ja', // Japanese
-      'ko', // Korean
       'es', // Spanish
       'fr', // French
       'de', // German
@@ -709,14 +790,12 @@ export const ASR_PROVIDERS: Record<ASRProviderId, ASRProviderConfig> = {
     icon: '/logos/bailian.svg',
     supportedLanguages: [
       // Qwen ASR supports 27 languages + auto-detect
-      // If language is uncertain or mixed (e.g. Chinese-English-Japanese-Korean), use "auto" (do not specify language parameter)
+      // If language is uncertain or mixed (e.g. English-Japanese-Korean), use "auto" (do not specify language parameter)
       'auto', // Auto-detect (do not specify language parameter)
       // Hot languages (commonly used)
-      'zh', // Chinese (Mandarin, Sichuanese, Minnan, Wu dialects)
-      'yue', // Cantonese
+      'ko', // Korean
       'en', // English
       'ja', // Japanese
-      'ko', // Korean
       'de', // German
       'fr', // French
       'ru', // Russian
@@ -746,15 +825,13 @@ export const ASR_PROVIDERS: Record<ASRProviderId, ASRProviderConfig> = {
 
   'browser-native': {
     id: 'browser-native',
-    name: '浏览器原生 ASR (Web Speech API)',
+    name: '브라우저 기본 ASR (Web Speech API)',
     requiresApiKey: false,
     icon: '/logos/browser.svg',
     supportedLanguages: [
-      // Chinese variants
-      'zh-CN', // Mandarin (Simplified, China)
-      'zh-TW', // Mandarin (Traditional, Taiwan)
-      'zh-HK', // Cantonese (Hong Kong)
-      'yue-Hant-HK', // Cantonese (Traditional)
+      // Korean & Japanese
+      'ko-KR', // Korean (South Korea)
+      'ja-JP', // Japanese (Japan)
       // English variants
       'en-US', // English (United States)
       'en-GB', // English (United Kingdom)
@@ -763,9 +840,6 @@ export const ASR_PROVIDERS: Record<ASRProviderId, ASRProviderConfig> = {
       'en-IN', // English (India)
       'en-NZ', // English (New Zealand)
       'en-ZA', // English (South Africa)
-      // Japanese & Korean
-      'ja-JP', // Japanese (Japan)
-      'ko-KR', // Korean (South Korea)
       // European languages
       'de-DE', // German (Germany)
       'fr-FR', // French (France)
@@ -830,9 +904,10 @@ export function getTTSProvider(providerId: TTSProviderId): TTSProviderConfig | u
  */
 export const DEFAULT_TTS_VOICES: Record<TTSProviderId, string> = {
   'openai-tts': 'alloy',
-  'azure-tts': 'zh-CN-XiaoxiaoNeural',
+  'azure-tts': 'en-US-JennyNeural',
   'glm-tts': 'tongtong',
   'qwen-tts': 'Cherry',
+  'gemini-tts': 'kore',
   'browser-native-tts': 'default',
 };
 

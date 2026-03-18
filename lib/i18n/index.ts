@@ -1,25 +1,25 @@
 import { defaultLocale } from './types';
 export { type Locale, defaultLocale } from './types';
-import { commonZhCN, commonEnUS } from './common';
-import { stageZhCN, stageEnUS } from './stage';
-import { chatZhCN, chatEnUS } from './chat';
-import { generationZhCN, generationEnUS } from './generation';
-import { settingsZhCN, settingsEnUS } from './settings';
+import { commonEnUS, commonKoKR } from './common';
+import { stageEnUS, stageKoKR } from './stage';
+import { chatEnUS, chatKoKR } from './chat';
+import { generationEnUS, generationKoKR } from './generation';
+import { settingsEnUS, settingsKoKR } from './settings';
 
 export const translations = {
-  'zh-CN': {
-    ...commonZhCN,
-    ...stageZhCN,
-    ...chatZhCN,
-    ...generationZhCN,
-    ...settingsZhCN,
-  },
   'en-US': {
     ...commonEnUS,
     ...stageEnUS,
     ...chatEnUS,
     ...generationEnUS,
     ...settingsEnUS,
+  },
+  'ko-KR': {
+    ...commonKoKR,
+    ...stageKoKR,
+    ...chatKoKR,
+    ...generationKoKR,
+    ...settingsKoKR,
   },
 } as const;
 

@@ -67,7 +67,7 @@ export function TtsConfigPopover() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: '你好，欢迎来到AI课堂！让我们一起学习吧。',
+          text: t('settings.ttsTestTextDefault'),
           audioId: 'preview',
           ttsProviderId: ttsProviderId,
           ttsVoice: ttsVoice,
